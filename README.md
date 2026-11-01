@@ -44,7 +44,8 @@ export NIX_CONFIG="experimental-features = nix-command flakes"
 git clone https://github.com/OmarDardery/wsl-config.git ~/wsl-config
 cd ~/wsl-config
 nix flake lock
-sudo nixos-rebuild boot --flake "path:$PWD#wsl"
+sudo env NIX_CONFIG="experimental-features = nix-command flakes" \
+  nixos-rebuild boot --flake "path:$PWD#wsl"
 ```
 
 If the image lacks Git, install or temporarily run it using
@@ -67,9 +68,10 @@ sudo chown -R oad:users "$HOME/wsl-config"
 sudo nixos-rebuild switch --flake "path:$HOME/wsl-config#wsl"
 ```
 
-If your initial image has a different `system.stateVersion`, **preserve its
-original value** in `wsl.nix` rather than updating it during this migration.
-Always review changes before switching.
+**Before the first boot rebuild:** check the image's original
+`system.stateVersion` in `/etc/nixos/configuration.nix`. If it differs from
+`26.05`, edit `wsl.nix` to preserve the original value. Never raise the
+state version merely because nixpkgs was upgraded.
 
 ## Everyday use
 

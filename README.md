@@ -37,6 +37,11 @@ uses `oad`. Changing the default WSL user on an existing installation requires a
 **boot rebuild**, not an immediate switch. See the
 [official username migration instructions](https://nix-community.github.io/NixOS-WSL/how-to/change-username.html).
 
+**Before the first boot rebuild:** check the image's original
+`system.stateVersion` in `/etc/nixos/configuration.nix`. If it differs from
+`26.05`, edit `wsl.nix` to preserve the original value. Never raise the
+state version merely because nixpkgs was upgraded.
+
 In the **initial NixOS-WSL shell**, run:
 
 ```sh
@@ -67,11 +72,6 @@ sudo mv /home/nixos/wsl-config "$HOME/wsl-config"
 sudo chown -R oad:users "$HOME/wsl-config"
 sudo nixos-rebuild switch --flake "path:$HOME/wsl-config#wsl"
 ```
-
-**Before the first boot rebuild:** check the image's original
-`system.stateVersion` in `/etc/nixos/configuration.nix`. If it differs from
-`26.05`, edit `wsl.nix` to preserve the original value. Never raise the
-state version merely because nixpkgs was upgraded.
 
 ## Everyday use
 

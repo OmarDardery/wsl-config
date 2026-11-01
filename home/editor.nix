@@ -3,6 +3,7 @@
   programs.neovim = {
     enable = true;
     defaultEditor = true;
+    sideloadInitLua = true; # Leave init.lua to the tracked LazyVim files.
     viAlias = true;
     vimAlias = true;
     withPython3 = false;
